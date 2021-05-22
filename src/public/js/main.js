@@ -1,17 +1,22 @@
-const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+import cart from './CartComp'
+import products from './ProducComp'
+import filterEl from './FilterComp'
+import error from './ErrorComp'
 
-const app = new Vue({
+const app = {
     el: '#app',
-    data: {
-        userSearch: '',
+    components: {
+      cart,
+      products,
+      error,
+      'filter-el': filterEl
     },
     methods: {
         getJson(url){
             return fetch(url)
                 .then(result => result.json())
                 .catch(error => {
-                    // console.log(error)
-                    this.$refs.error.text = error;
+                    this.$refs.error.setError(error);
                 })
         },
         postJson(url, data){
@@ -24,7 +29,7 @@ const app = new Vue({
             })
                 .then(result => result.json())
                 .catch(error => {
-                    this.$refs.error.text = error;
+                    this.$refs.error.setError(error);
                 })
         },
         putJson(url, data){
@@ -37,15 +42,22 @@ const app = new Vue({
             })
                 .then(result => result.json())
                 .catch(error => {
-                    this.$refs.error.text = error;
+                    this.$refs.error.setError(error);
                 })
         },
-
-
-    },
-    mounted(){
-
-
+        deleteJson(url){
+            return fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(result => result.json())
+                .catch(error => {
+                    this.$refs.error.setError(error);
+                })
+        }
     }
+};
 
-});
+export default app

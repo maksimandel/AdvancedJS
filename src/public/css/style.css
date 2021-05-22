@@ -33,7 +33,6 @@ button:focus{
 .btn-cart, .logo{
     align-self: center;
 }
-
 .products{
     column-gap: 30px;
     display: grid;
